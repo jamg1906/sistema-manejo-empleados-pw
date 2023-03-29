@@ -1,72 +1,101 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Newtonsoft.Json;
 using SistemaManejoEmpleados.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SistemaManejoEmpleados.Controllers
 {
     public class DireccionController : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            SistemaempleadosContext _sistemaempleadosContext = new SistemaempleadosContext();
-            return View(_sistemaempleadosContext.Direccions.ToList());
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.GetAsync("https://localhost:7101/api/Direccion/");
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                var direcciones = JsonConvert.DeserializeObject<IEnumerable<Models.Direccion>>(apiResponse);
+                return View(direcciones);
+            }
         }
 
+        [Route("Direccion/Details/{id}")]
+        public async Task<ActionResult> Details(int id)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.GetAsync($"https://localhost:7101/api/Direccion/{id}");
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                var direccion = JsonConvert.DeserializeObject<Models.Direccion>(apiResponse);
+                return View(direccion);
+            }
+        }
         public IActionResult Create()
         {           
             return View();
         }
 
-        [HttpGet]
-        [Route("Direccion/Delete/{idDireccion}")]
-        public ActionResult Delete(int idDireccion)
-        {
-            SistemaempleadosContext _sistemaempleadosContext = new SistemaempleadosContext();
-            _sistemaempleadosContext.Direccions.Remove(_sistemaempleadosContext.Direccions.Find(idDireccion));
-            _sistemaempleadosContext.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
         [HttpPost]
-        public IActionResult Create(string nombreDireccion, string descripcionDireccion, int DPIdirector)
+        public async Task<IActionResult> Create(string nombreDireccion, string descripcionDireccion, int DPIdirector)
         {
-            SistemaempleadosContext _sistemaempleadosContext = new SistemaempleadosContext();
 
-            Models.Direccion direccion = new Models.Direccion
+            SistemamanejoEmpleadosModel.Direccion direccion = new SistemamanejoEmpleadosModel.Direccion
             {
                 NombreDireccion = nombreDireccion,
                 DescripcionDireccion = descripcionDireccion
-
             };
-            _sistemaempleadosContext.Direccions.Add(direccion);
-            _sistemaempleadosContext.SaveChanges();
-
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.PostAsJsonAsync("https://localhost:7101/api/Direccion/", direccion);
+                string apiResponse = await response.Content.ReadAsStringAsync();
+            }
             return RedirectToAction("Index");
 
+        }
+
+        [HttpGet]
+        [Route("Direccion/Delete/{idDireccion}")]
+        public async Task<ActionResult> Delete(int idDireccion)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.DeleteAsync($"https://localhost:7101/api/Direccion/{idDireccion}");
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                return RedirectToAction("Index");
+            }
         }
 
 
         [HttpGet]
         [Route("Direccion/Edit/{idDireccion}")]
-        public ActionResult Edit(int idDireccion)
+        public async Task<ActionResult> Edit(int idDireccion)
         {
-            SistemaempleadosContext _sistemaempleadosContext = new SistemaempleadosContext();
-            return View(_sistemaempleadosContext.Direccions.Find(idDireccion));
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.GetAsync($"https://localhost:7101/api/Direccion/{idDireccion}");
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                var direccion = JsonConvert.DeserializeObject<Models.Direccion>(apiResponse);
+                return View(direccion);
+            }
         }
 
 
         [HttpPost]
-        public IActionResult Edit(int idDireccion, string nombreDireccion, string descripcionDireccion, int DPIdirector)
+        public async Task<IActionResult> Edit(int idDireccion, string nombreDireccion, string descripcionDireccion, int DPIdirector)
         {
-            SistemaempleadosContext _sistemaempleadosContext = new SistemaempleadosContext();
-
-            Models.Direccion direccion = new Models.Direccion
+            SistemamanejoEmpleadosModel.Direccion direccion = new SistemamanejoEmpleadosModel.Direccion
             {
                 IdDireccion = idDireccion,
                 NombreDireccion = nombreDireccion,
-                DescripcionDireccion = descripcionDireccion
+                DescripcionDireccion = descripcionDireccion,
+                Dpidirector = DPIdirector
             };
-            _sistemaempleadosContext.Direccions.Update(direccion);
-            _sistemaempleadosContext.SaveChanges();
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.PutAsJsonAsync($"https://localhost:7101/api/Direccion/{idDireccion}", direccion);
+                string apiResponse = await response.Content.ReadAsStringAsync();
+            }
             return RedirectToAction("Index");
 
         }
