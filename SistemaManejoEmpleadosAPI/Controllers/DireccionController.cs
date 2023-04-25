@@ -27,7 +27,8 @@ namespace SistemaManejoEmpleadosAPI.Controllers
             {
                 IdDireccion = newDireccion.IdDireccion,
                 NombreDireccion = newDireccion.NombreDireccion,
-                DescripcionDireccion = newDireccion.DescripcionDireccion
+                DescripcionDireccion = newDireccion.DescripcionDireccion,
+                Dpidirector = newDireccion.Dpidirector
             };
             _context.Direccions.Add(direccion);
             await _context.SaveChangesAsync();
@@ -47,7 +48,8 @@ namespace SistemaManejoEmpleadosAPI.Controllers
                   {
                       IdDireccion = s.IdDireccion,
                       NombreDireccion = s.NombreDireccion,
-                      DescripcionDireccion = s.DescripcionDireccion
+                      DescripcionDireccion = s.DescripcionDireccion,
+                      Dpidirector = s.Dpidirector
                   }).ToListAsync();
 
             return direccions;
@@ -65,7 +67,8 @@ namespace SistemaManejoEmpleadosAPI.Controllers
                   {
                       IdDireccion = s.IdDireccion,
                       NombreDireccion = s.NombreDireccion,
-                      DescripcionDireccion = s.DescripcionDireccion
+                      DescripcionDireccion = s.DescripcionDireccion,
+                      Dpidirector = s.Dpidirector
                   }).ToListAsync();
 
             return direcciones.Where(s => s.IdDireccion == id).FirstOrDefault();
@@ -85,6 +88,7 @@ namespace SistemaManejoEmpleadosAPI.Controllers
                     IdDireccion = editedDireccion.IdDireccion,
                     NombreDireccion = editedDireccion.NombreDireccion,
                     DescripcionDireccion = editedDireccion.DescripcionDireccion,
+                    Dpidirector = editedDireccion.Dpidirector
                 };
                 _context.Direccions.Update(direccion);
                 await _context.SaveChangesAsync();

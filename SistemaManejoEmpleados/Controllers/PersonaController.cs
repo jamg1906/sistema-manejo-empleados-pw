@@ -3,6 +3,7 @@ using SistemaManejoEmpleados.Models;
 using System.Xml.Linq;
 using SistemamanejoEmpleadosModel;
 using Newtonsoft.Json;
+using SistemaManejoEmpleados.Functions;
 
 namespace SistemaManejoEmpleados.Controllers
 {
@@ -12,19 +13,19 @@ namespace SistemaManejoEmpleados.Controllers
         {
             using (var httpClient = new HttpClient())
             {
-                var response = await httpClient.GetAsync("https://localhost:7101/api/Persona/");
+                var response = await httpClient.GetAsync(APIServices.baseurl + "Persona/");
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 var personas = JsonConvert.DeserializeObject<IEnumerable<Models.Persona>>(apiResponse);
                 return View(personas);
             }
-        }
+        }   
 
         [Route("Persona/Details/{Dpi}")]
         public async Task<ActionResult> Details(int Dpi)
         {
             using (var httpClient = new HttpClient())
             {
-                var response = await httpClient.GetAsync($"https://localhost:7101/api/Persona/{Dpi}");
+                var response = await httpClient.GetAsync($"{APIServices.baseurl}Persona/{Dpi}");
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 var persona = JsonConvert.DeserializeObject<Models.Persona>(apiResponse);
                 return View(persona);
@@ -63,7 +64,7 @@ namespace SistemaManejoEmpleados.Controllers
             };
             using (var httpClient = new HttpClient())
             {
-                var response = await httpClient.PostAsJsonAsync("https://localhost:7101/api/Persona/", person);
+                var response = await httpClient.PostAsJsonAsync(APIServices.baseurl + "Persona/", person);
                 string apiResponse = await response.Content.ReadAsStringAsync();
             }
             return RedirectToAction("Index");
@@ -77,7 +78,7 @@ namespace SistemaManejoEmpleados.Controllers
         {
             using (var httpClient = new HttpClient())
             {
-                var response = await httpClient.DeleteAsync($"https://localhost:7101/api/Persona/{Dpi}");
+                var response = await httpClient.DeleteAsync($"{APIServices.baseurl}Persona/{Dpi}");
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 return RedirectToAction("Index");
             }
@@ -88,7 +89,7 @@ namespace SistemaManejoEmpleados.Controllers
         {
             using (var httpClient = new HttpClient())
             {
-                var response = await httpClient.GetAsync($"https://localhost:7101/api/Persona/{Dpi}");
+                var response = await httpClient.GetAsync($"{APIServices.baseurl} Persona/{Dpi}");
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 var persona = JsonConvert.DeserializeObject<Models.Persona>(apiResponse);
                 return View(persona);
@@ -122,7 +123,7 @@ namespace SistemaManejoEmpleados.Controllers
             };
             using (var httpClient = new HttpClient())
             {
-                var response = await httpClient.PutAsJsonAsync($"https://localhost:7101/api/Persona/{dpi}", person);
+                var response = await httpClient.PutAsJsonAsync($"{APIServices.baseurl}Persona/{dpi}", person);
                 string apiResponse = await response.Content.ReadAsStringAsync();
             }
             return RedirectToAction("Index");
