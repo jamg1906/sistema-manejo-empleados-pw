@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+using System;
 using System.Collections.Generic;
 
 namespace SistemaManejoEmpleados.Models;
@@ -36,4 +37,6 @@ public partial class Persona
     public virtual Director? Director { get; set; }
 
     public virtual Empleado? Empleado { get; set; }
+    public string NombreCompleto { get { return Nombre + " " + PrimerApellido + " " + SegundoApellido; } }
+
 }

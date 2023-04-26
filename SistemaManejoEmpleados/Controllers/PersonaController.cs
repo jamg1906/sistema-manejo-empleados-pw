@@ -99,14 +99,15 @@ namespace SistemaManejoEmpleados.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int dpi, string nombre, string primerapellido,
+        [Route("Persona/Edit/{Dpi}")]
+        public async Task<IActionResult> Edit(int Dpi, string nombre, string primerapellido,
         string segundoapellido, string email, string direccion, int telefono,
         int celular, DateTime fechaNacimiento, decimal salario, string contraseña,
         int estado, sbyte esadmin)
         {
             SistemamanejoEmpleadosModel.Persona person = new SistemamanejoEmpleadosModel.Persona
             {
-                Dpi = dpi,
+                Dpi = Dpi,
                 Nombre = nombre,
                 PrimerApellido = primerapellido,
                 SegundoApellido = segundoapellido,
@@ -123,7 +124,7 @@ namespace SistemaManejoEmpleados.Controllers
             };
             using (var httpClient = new HttpClient())
             {
-                var response = await httpClient.PutAsJsonAsync($"{APIServices.baseurl}Persona/{dpi}", person);
+                var response = await httpClient.PutAsJsonAsync($"{APIServices.baseurl}Persona/{Dpi}", person);
                 string apiResponse = await response.Content.ReadAsStringAsync();
             }
             return RedirectToAction("Index");
