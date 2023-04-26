@@ -45,7 +45,8 @@ namespace SistemaManejoEmpleadosAPI.Controllers
                   new SistemamanejoEmpleadosModel.Director
                   {
                       Dpi = s.Dpi,
-                      Bonos = s.Bonos
+                      Bonos = s.Bonos,
+                      PersonaName = s.DpiNavigation.Nombre + s.DpiNavigation.PrimerApellido + s.DpiNavigation.SegundoApellido,
                   }).ToListAsync();
 
             return directors;
@@ -61,6 +62,7 @@ namespace SistemaManejoEmpleadosAPI.Controllers
                   {
                       Dpi = s.Dpi,
                       Bonos= s.Bonos,
+                      PersonaName = s.DpiNavigation.Nombre + s.DpiNavigation.PrimerApellido + s.DpiNavigation.SegundoApellido,
                   }).ToListAsync();
 
             return directors.Where(s => s.Dpi == id).FirstOrDefault();

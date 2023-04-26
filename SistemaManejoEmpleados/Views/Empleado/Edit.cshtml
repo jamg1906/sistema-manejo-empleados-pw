@@ -1,0 +1,59 @@
+﻿@model SistemaManejoEmpleados.Models.Empleado
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Empleado</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Dpiempleado" />
+            <div class="form-group">
+                <label>Dirección</label>
+                @Html.DropDownList("DropDownDireccion", ViewBag.Direcciones as List<SelectListItem>, "Seleccione dirección", new { @class = "form-control"})
+            </div>
+            <div class="form-group">
+                <label>Departamento</label>
+                @Html.DropDownList("DropDownDepartamentos", new List<SelectListItem>(), "Seleccione departamento", new { @class = "form-control"})
+            </div>
+            <div class="form-group">
+                <p>Puesto</p>
+                <select asp-for="IdPuesto" class="form-control" asp-items="ViewBag.puestos"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        console.log($.fn.jquery)
+        jQuery(document).ready(function ($) {
+            $("select[name='DropDownDireccion']").change(function () {
+                $.get("/Empleado/GetDepartamentosList", { idDireccion: $("select[name='DropDownDireccion']").val() }, function (data) {
+                    console.log(data)
+                    $("#DropDownDepartamentos").empty();
+                    $("#DropDownDepartamentos").append("<option value>Elija un departamento de: " + $("#DropDownDireccion option:selected").text() + "</option>")
+                    debugger;
+                    $.each(data, function (index, row) {
+                        $("#DropDownDepartamentos").append("<option value='" + row.idDepartamento + "'>" + row.nombreDepartamento + "</option>")
+                    });
+                });
+            });
+        });
+    </script>
+}

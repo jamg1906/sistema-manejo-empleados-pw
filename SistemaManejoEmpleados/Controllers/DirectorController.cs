@@ -58,7 +58,18 @@ namespace SistemaManejoEmpleados.Controllers
             {
                 var response = await httpClient.GetAsync(APIServices.baseurl + "Director/");
                 string apiResponse = await response.Content.ReadAsStringAsync();
-                var directores = JsonConvert.DeserializeObject<IEnumerable<Models.Director>>(apiResponse);
+                var directores = JsonConvert.DeserializeObject<IEnumerable<Models.Director>> (apiResponse);
+
+                foreach(var director in directores)
+                {
+                    using (var httpClient2 = new HttpClient())
+                    {
+                        var response2 = await httpClient2.GetAsync($"{APIServices.baseurl}Persona/{director.Dpi}");
+                        string apiResponse2 = await response2.Content.ReadAsStringAsync();
+                        var elDirector = JsonConvert.DeserializeObject<Models.Persona>(apiResponse2);
+                        director.DpiNavigation = elDirector;
+                    }
+                }
                 return View(directores);
             }
         }

@@ -85,11 +85,11 @@ namespace SistemaManejoEmpleados.Controllers
         }
 
         [Route("Persona/Edit/{Dpi}")]
-        public async Task<ActionResult> Update(int Dpi)
+        public async Task<ActionResult> Edit(int Dpi)
         {
             using (var httpClient = new HttpClient())
             {
-                var response = await httpClient.GetAsync($"{APIServices.baseurl} Persona/{Dpi}");
+                var response = await httpClient.GetAsync($"{APIServices.baseurl}Persona/{Dpi}");
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 var persona = JsonConvert.DeserializeObject<Models.Persona>(apiResponse);
                 return View(persona);

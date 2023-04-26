@@ -13,6 +13,7 @@ namespace SistemaManejoEmpleados.Controllers
 {
     public class DireccionController : Microsoft.AspNetCore.Mvc.Controller
     {
+        #region Reads
         public async Task<IActionResult> Index()
         {
             using (var httpClient = new HttpClient())
@@ -35,7 +36,7 @@ namespace SistemaManejoEmpleados.Controllers
                 return View(direccion);
             }
         }
-
+        #endregion
         public async static Task<string> DirectorName(int Dpi)
         {
             using (var httpClient = new HttpClient())
@@ -46,6 +47,8 @@ namespace SistemaManejoEmpleados.Controllers
                 return persona.Nombre + " " + persona.PrimerApellido + " " + persona.SegundoApellido;
             }
         }
+
+        #region Create
         public async Task<IActionResult> Create()
         {
             using (var httpClient = new HttpClient())
@@ -83,6 +86,10 @@ namespace SistemaManejoEmpleados.Controllers
 
         }
 
+        #endregion
+
+        #region Delete
+
         [HttpGet]
         [Route("Direccion/Delete/{idDireccion}")]
         public async Task<ActionResult> Delete(int idDireccion)
@@ -94,8 +101,9 @@ namespace SistemaManejoEmpleados.Controllers
                 return RedirectToAction("Index");
             }
         }
+        #endregion
 
-
+        #region Update
         [HttpGet]
         [Route("Direccion/Edit/{idDireccion}")]
         public async Task<ActionResult> Edit(int idDireccion)
@@ -139,5 +147,6 @@ namespace SistemaManejoEmpleados.Controllers
             return RedirectToAction("Index");
 
         }
+        #endregion
     }
 }

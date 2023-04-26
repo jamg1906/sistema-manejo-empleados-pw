@@ -13,6 +13,6 @@ namespace SistemamanejoEmpleadosModel
         public int? Bonos { get; set; }
         public List<SelectListItem>? Personas { get; set; }
 
-        public string? PersonaName;
+        public string PersonaName { get; set; }
     }
 }

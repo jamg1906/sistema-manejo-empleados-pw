@@ -9,4 +9,5 @@ public partial class Director
     public int? Bonos { get; set; }
     public virtual ICollection<Direccion> Direccions { get; } = new List<Direccion>();
     public virtual Persona DpiNavigation { get; set; } = null!;
+    public string NombreCompleto { get { return DpiNavigation.Nombre + " " + DpiNavigation.PrimerApellido + " " + DpiNavigation.SegundoApellido; } }
 }
