@@ -1,0 +1,80 @@
+CREATE TABLE `departamento` (
+  `idDepartamento` int NOT NULL AUTO_INCREMENT,
+  `idDireccion` int NOT NULL,
+  `nombreDepartamento` varchar(100) NOT NULL,
+  `descripcionDepartamento` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idDepartamento`),
+  KEY `idDireccion_Direccion_Departamento_idx` (`idDireccion`),
+  CONSTRAINT `idDireccion_Direccion_Departamento` FOREIGN KEY (`idDireccion`) REFERENCES `direccion` (`idDireccion`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `direccion` (
+  `idDireccion` int NOT NULL AUTO_INCREMENT,
+  `nombreDireccion` varchar(100) NOT NULL,
+  `descripcionDireccion` varchar(100) NOT NULL,
+  `DPIDirector` int DEFAULT NULL,
+  PRIMARY KEY (`idDireccion`),
+  KEY `DPI_idx` (`DPIDirector`),
+  CONSTRAINT `DPI_Director_Direccion` FOREIGN KEY (`DPIDirector`) REFERENCES `director` (`DPI`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `director` (
+  `DPI` int NOT NULL,
+  `Bonos` int DEFAULT NULL,
+  PRIMARY KEY (`DPI`),
+  CONSTRAINT `DPI` FOREIGN KEY (`DPI`) REFERENCES `persona` (`DPI`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `empleado` (
+  `DPIEmpleado` int NOT NULL,
+  `idDireccion` int DEFAULT NULL,
+  `idDepartamento` int DEFAULT NULL,
+  `idPuesto` int DEFAULT NULL,
+  PRIMARY KEY (`DPIEmpleado`),
+  KEY `idDireccion_Direccion_Empleado_idx` (`idDireccion`),
+  KEY `idDepartamento_Departamento_Empleado_idx` (`idDepartamento`),
+  KEY `idPuesto_Puesto_Empleado_idx` (`idPuesto`),
+  CONSTRAINT `DPI_Persona_Empleado` FOREIGN KEY (`DPIEmpleado`) REFERENCES `persona` (`DPI`),
+  CONSTRAINT `idDepartamento_Departamento_Empleado` FOREIGN KEY (`idDepartamento`) REFERENCES `departamento` (`idDepartamento`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `idDireccion_Direccion_Empleado` FOREIGN KEY (`idDireccion`) REFERENCES `direccion` (`idDireccion`),
+  CONSTRAINT `idPuesto_Puesto_Empleado` FOREIGN KEY (`idPuesto`) REFERENCES `puesto` (`idPuesto`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `persona` (
+  `DPI` int NOT NULL,
+  `Nombre` varchar(100) NOT NULL,
+  `PrimerApellido` varchar(100) NOT NULL,
+  `SegundoApellido` varchar(100) NOT NULL,
+  `Email` varchar(100) NOT NULL,
+  `Direccion` varchar(100) NOT NULL,
+  `Telefono` int NOT NULL,
+  `Celular` int DEFAULT NULL,
+  `FechaNacimiento` date NOT NULL,
+  `FechaContratación` date NOT NULL,
+  `Salario` decimal(20,2) NOT NULL,
+  `Contraseña` varchar(100) NOT NULL,
+  `Estado` int NOT NULL,
+  `EsAdmin` tinyint NOT NULL,
+  PRIMARY KEY (`DPI`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `puesto` (
+  `idPuesto` int NOT NULL AUTO_INCREMENT,
+  `nombrePuesto` varchar(100) NOT NULL,
+  `descripcionPuesto` varchar(100) NOT NULL,
+  PRIMARY KEY (`idPuesto`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `tarea` (
+  `idtarea` int NOT NULL AUTO_INCREMENT,
+  `DPIEmpleadoAsignado` int NOT NULL,
+  `nombreTarea` varchar(100) NOT NULL,
+  `requerimientosTarea` varchar(100) NOT NULL,
+  `fechaCreacion` datetime NOT NULL,
+  `fechaLimite` datetime DEFAULT NULL,
+  `estado` varchar(100) NOT NULL,
+  `comentarios` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idtarea`),
+  KEY `DPI_Empleado_Tarea_idx` (`DPIEmpleadoAsignado`),
+  CONSTRAINT `DPI_Empleado_Tarea` FOREIGN KEY (`DPIEmpleadoAsignado`) REFERENCES `empleado` (`DPIEmpleado`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
