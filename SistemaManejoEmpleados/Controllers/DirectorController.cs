@@ -39,11 +39,11 @@ namespace SistemaManejoEmpleados.Controllers
             SistemamanejoEmpleadosModel.Director director = new SistemamanejoEmpleadosModel.Director
             {
                 Dpi = int.Parse(dpi),
-                Bonos = Bonos
+                Bonos = Bonos,
             };
             using (var httpClient = new HttpClient())
-            {
-                var response = await httpClient.PostAsJsonAsync(APIServices.baseurl + "Director/", director);
+            {   
+                var response = await httpClient.PostAsJsonAsync(APIServices.baseurl + "Director", director);
                 string apiResponse = await response.Content.ReadAsStringAsync();
 
             }

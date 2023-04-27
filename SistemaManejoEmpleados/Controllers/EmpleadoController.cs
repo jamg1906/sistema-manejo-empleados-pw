@@ -21,6 +21,31 @@ namespace SistemaManejoEmpleados.Controllers
                 var response = await httpClient.GetAsync(APIServices.baseurl + "Empleado/");
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 var empleados = JsonConvert.DeserializeObject<IEnumerable<Models.Empleado>>(apiResponse);
+                foreach (var empleado in empleados)
+                {
+                    using (var httpClient2 = new HttpClient())
+                    {
+                        var response2 = await httpClient2.GetAsync($"{APIServices.baseurl}Persona/{empleado.Dpiempleado}");
+                        string apiResponse2 = await response2.Content.ReadAsStringAsync();
+                        var laPersona = JsonConvert.DeserializeObject<Models.Persona>(apiResponse2);
+                        empleado.DpiempleadoNavigation = laPersona;
+
+                        var response3 = await httpClient2.GetAsync($"{APIServices.baseurl}Direccion/{empleado.IdDireccion}");
+                        string apiResponse3 = await response3.Content.ReadAsStringAsync();
+                        var laDireccion = JsonConvert.DeserializeObject<Models.Direccion>(apiResponse3);
+                        empleado.IdDireccionNavigation = laDireccion;
+
+                        var response4 = await httpClient2.GetAsync($"{APIServices.baseurl}Departamento/{empleado.IdDepartamento}");
+                        string apiResponse4 = await response4.Content.ReadAsStringAsync();
+                        var elDepto = JsonConvert.DeserializeObject<Models.Departamento>(apiResponse4);
+                        empleado.IdDepartamentoNavigation = elDepto;
+
+                        var response5 = await httpClient2.GetAsync($"{APIServices.baseurl}Puesto/{empleado.IdPuesto}");
+                        string apiResponse5 = await response5.Content.ReadAsStringAsync();
+                        var elPuesto = JsonConvert.DeserializeObject<Models.Puesto>(apiResponse5);
+                        empleado.IdPuestoNavigation = elPuesto;
+                    }
+                }
                 return View(empleados);
             }
         }

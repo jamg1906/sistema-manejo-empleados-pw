@@ -17,9 +17,6 @@ namespace SistemaManejoEmpleadosAPI.Controllers
         }
 
         #region Create
-        // POST: api/Director
-        //este sería el create
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<IActionResult> PostDirector(SistemamanejoEmpleadosModel.Director newDirector)
         {
@@ -46,7 +43,6 @@ namespace SistemaManejoEmpleadosAPI.Controllers
                   {
                       Dpi = s.Dpi,
                       Bonos = s.Bonos,
-                      PersonaName = s.DpiNavigation.Nombre + s.DpiNavigation.PrimerApellido + s.DpiNavigation.SegundoApellido,
                   }).ToListAsync();
 
             return directors;
@@ -62,7 +58,6 @@ namespace SistemaManejoEmpleadosAPI.Controllers
                   {
                       Dpi = s.Dpi,
                       Bonos= s.Bonos,
-                      PersonaName = s.DpiNavigation.Nombre + s.DpiNavigation.PrimerApellido + s.DpiNavigation.SegundoApellido,
                   }).ToListAsync();
 
             return directors.Where(s => s.Dpi == id).FirstOrDefault();

@@ -11,8 +11,5 @@ namespace SistemamanejoEmpleadosModel
     {
         public int Dpi { get; set; }
         public int? Bonos { get; set; }
-        public List<SelectListItem>? Personas { get; set; }
-
-        public string PersonaName { get; set; }
     }
 }

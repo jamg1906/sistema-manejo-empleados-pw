@@ -16,6 +16,9 @@
                 @Html.DisplayNameFor(model => model.NombreTarea)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.DpiempleadoAsignadoNavigation.DpiempleadoNavigation.NombreCompleto)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.RequerimientosTarea)
             </th>
             <th>
@@ -30,9 +33,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Comentarios)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DpiempleadoAsignadoNavigation)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -42,6 +42,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.NombreTarea)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DpiempleadoAsignadoNavigation.DpiempleadoNavigation.NombreCompleto)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RequerimientosTarea)
             </td>
@@ -56,9 +59,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Comentarios)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DpiempleadoAsignadoNavigation.Dpiempleado)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Idtarea">Edit</a> |

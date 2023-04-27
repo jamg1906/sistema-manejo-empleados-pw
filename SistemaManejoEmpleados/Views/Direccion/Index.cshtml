@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.DescripcionDireccion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Dpidirector)
+                @Html.DisplayNameFor(model => model.DpidirectorNavigation.NombreCompletoDirector)
             </th>
             <th></th>
         </tr>
@@ -34,7 +34,7 @@
                 @Html.DisplayFor(modelItem => item.DescripcionDireccion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Dpidirector)
+                    @Html.DisplayFor(modelItem => item.DpidirectorNavigation.NombreCompletoDirector)
             </td>
             <td>
                     <a asp-action="Details" asp-route-id="@item.IdDireccion">Details</a>

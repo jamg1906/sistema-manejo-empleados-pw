@@ -16,13 +16,25 @@
                 @Html.DisplayNameFor(model => model.Dpiempleado)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.DpiempleadoNavigation.NombreCompleto)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.IdDireccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDireccionNavigation.NombreDireccion)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdDepartamento)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.IdDepartamentoNavigation.NombreDepartamento)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.IdPuesto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPuestoNavigation.NombrePuesto)
             </th>
             <th></th>
         </tr>
@@ -34,14 +46,26 @@
                 @Html.DisplayFor(modelItem => item.Dpiempleado)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.DpiempleadoNavigation.NombreCompleto)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.IdDireccion)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdDireccionNavigation.NombreDireccion)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdDepartamento)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdDepartamentoNavigation.NombreDepartamento)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdPuesto)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdPuestoNavigation.NombrePuesto)
+                </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Dpiempleado">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Dpiempleado">Details</a> |

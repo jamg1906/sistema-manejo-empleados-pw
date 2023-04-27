@@ -22,6 +22,18 @@ namespace SistemaManejoEmpleados.Controllers
                 var response = await httpClient.GetAsync(APIServices.baseurl + "Tarea/");
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 var tareas = JsonConvert.DeserializeObject<IEnumerable<Models.Tarea>>(apiResponse);
+                foreach (var tarea in tareas)
+                {
+                    using (var httpClient2 = new HttpClient())
+                    {
+                        var response2 = await httpClient2.GetAsync($"{APIServices.baseurl}Persona/{tarea.DpiempleadoAsignado}");
+                        string apiResponse2 = await response2.Content.ReadAsStringAsync();
+                        var laPersona = JsonConvert.DeserializeObject<Models.Persona>(apiResponse2);
+                        tarea.DpiempleadoAsignadoNavigation = new Empleado();
+                        tarea.DpiempleadoAsignadoNavigation.DpiempleadoNavigation = laPersona;
+
+                    }
+                }
                 return View(tareas);
             }
         }
